@@ -4,6 +4,9 @@
 #include "MainCharacter.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Camera/CameraComponent.h"
+#include"GameFramework/SpringArmComponent.h"
+
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -13,6 +16,11 @@ AMainCharacter::AMainCharacter()
 	CharacterMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Character Mesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
+	SpringArm->SetupAttachment(CharacterMesh);
+    Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm);
 }
 
 // Called when the game starts or when spawned

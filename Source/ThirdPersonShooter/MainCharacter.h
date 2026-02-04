@@ -3,9 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
+#include"GameFramework/SpringArmComponent.h"
 #include "GameFramework/Character.h"
 #include "MainCharacter.generated.h"
 
+
+
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class THIRDPERSONSHOOTER_API AMainCharacter : public ACharacter
@@ -27,6 +33,13 @@ private:
     UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* CharacterMesh;
 
+	UPROPERTY(EditAnywhere)
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(EditAnywhere)
+	UCameraComponent* Camera;
+
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
@@ -34,4 +47,9 @@ private:
 	void Strafe(float AxisAmount);
 	void LookUp(float AxisAmount);
 	void Turn(float AxisAmount);
+
+
+	UPROPERTY(EditAnywhere)
+	USpringArmComponent* CameraSpringArm;
+
 };
