@@ -9,7 +9,7 @@
 #include "MainCharacter.generated.h"
 
 
-
+class USceneCamptureComponent2D;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -52,4 +52,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* CameraSpringArm;
 
+	UPROPERTY(EditAnywhere)
+	USceneCaptureComponent2D* MiniMapCamera;
 };

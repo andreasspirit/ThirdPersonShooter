@@ -15,24 +15,18 @@ AMainCharacter::AMainCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	CharacterMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Character Mesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
-
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
-	SpringArm->SetupAttachment(RootComponent);
+	SpringArm->SetupAttachment(CharacterMesh);
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MiniMap Spring arm"));
-	CameraSpringArm->SetupAttachment(RootComponent);
-	CameraSpringArm->TargetArmLength = 600.f;
-	CameraSpringArm->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f)); // look straight down
-	CameraSpringArm->bDoCollisionTest = false;
+	CameraSpringArm->SetupAttachment(CharacterMesh);
 
 	MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
 	MiniMapCamera->SetupAttachment(CameraSpringArm);
-
-
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 // Called when the game starts or when spawned
