@@ -22,6 +22,8 @@ AMainCharacter::AMainCharacter()
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
+
+	//Spring Arm for Minimap
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MiniMap Spring arm"));
 	CameraSpringArm->SetupAttachment(RootComponent);
 	CameraSpringArm->TargetArmLength = 600.f;
@@ -62,6 +64,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AMainCharacter::MoveForward(float AxisAmount)
 {
+	
 	AddMovementInput(GetActorRightVector() * AxisAmount);
 }
 
