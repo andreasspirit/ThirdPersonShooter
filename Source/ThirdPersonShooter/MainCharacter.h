@@ -3,13 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include"GameFramework/SpringArmComponent.h"
-#include "GameFramework/Character.h"
+#include "Components/StaticMeshComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
+#include "Sound/SoundBase.h"
 #include "MainCharacter.generated.h"
 
-
-class USceneCamptureComponent2D;
+class USceneCaptureComponent2D;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -29,7 +31,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-private:
+
     UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* CharacterMesh;
 
@@ -39,6 +41,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* Camera;
 
+	//UPROPERTY(EditAnywhere)
+	//USoundBase* ShooterMusic;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -52,6 +56,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* CameraSpringArm;
 
-	UPROPERTY(EditAnywhere)
-	USceneCaptureComponent2D* MiniMapCamera;
+	//UPROPERTY(EditAnywhere)
+	//USceneCaptureComponent2D* MiniMapCamera;
 };

@@ -7,6 +7,8 @@
 #include "Camera/CameraComponent.h"
 #include"GameFramework/SpringArmComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
+//#include"Kismet/GameplayStatics.h"
+
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -30,8 +32,8 @@ AMainCharacter::AMainCharacter()
 	CameraSpringArm->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f)); // look straight down
 	CameraSpringArm->bDoCollisionTest = false;
 
-	MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
-	MiniMapCamera->SetupAttachment(CameraSpringArm);
+	//MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
+	//MiniMapCamera->SetupAttachment(CameraSpringArm);
 
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -41,13 +43,21 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+	//if (LevelName == TEXT("MainMenuMap") && ShooterMusic)
+	//{
+	//	UGameplayStatics::PlaySound2D(this, ShooterMusic);
+	//}
+
 }
 
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
 
 }
 
@@ -60,6 +70,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AMainCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AMainCharacter::Turn);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &AMainCharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
+
+	
 }
 
 void AMainCharacter::MoveForward(float AxisAmount)
@@ -82,3 +95,4 @@ void AMainCharacter::Turn(float AxisAmount)
 {
 	AddControllerYawInput(AxisAmount);
 }
+
