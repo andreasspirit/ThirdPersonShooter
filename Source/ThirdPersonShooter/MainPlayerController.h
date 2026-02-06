@@ -7,7 +7,7 @@
 #include "MainPlayerController.generated.h"
 
 
- //class UUserWidget;
+ class UUserWidget;
 /**
  * 
  */
@@ -20,8 +20,10 @@ protected:
 	virtual void BeginPlay() override;
 
 	//declare the UUserWidget which will implement the Minimap widget 
-//private:
-	//UPROPERTY(EditAnywhere,Category="UI")
-	//TSubclassOf<UUserWidget>MiniMapClass;
-	//UUserWidget* MiniMap;
+private:
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> MiniMapClass;
+
+	UPROPERTY()
+	UUserWidget* MinimapUI = nullptr;
 };

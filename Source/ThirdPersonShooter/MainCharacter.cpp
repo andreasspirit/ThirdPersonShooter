@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include"GameFramework/SpringArmComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
+
 //#include"Kismet/GameplayStatics.h"
 
 
@@ -32,8 +33,8 @@ AMainCharacter::AMainCharacter()
 	CameraSpringArm->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f)); // look straight down
 	CameraSpringArm->bDoCollisionTest = false;
 
-	//MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
-	//MiniMapCamera->SetupAttachment(CameraSpringArm);
+	MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
+	MiniMapCamera->SetupAttachment(CameraSpringArm);
 
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;

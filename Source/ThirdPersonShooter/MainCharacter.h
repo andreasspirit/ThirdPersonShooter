@@ -11,7 +11,6 @@
 #include "Sound/SoundBase.h"
 #include "MainCharacter.generated.h"
 
-class USceneCaptureComponent2D;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -56,6 +55,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* CameraSpringArm;
 
-	//UPROPERTY(EditAnywhere)
-	//USceneCaptureComponent2D* MiniMapCamera;
+	UPROPERTY(EditAnywhere)
+	USceneCaptureComponent2D* MiniMapCamera;
 };

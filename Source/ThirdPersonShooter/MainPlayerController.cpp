@@ -7,12 +7,12 @@
 void AMainPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
-
-	//MiniMap = CreateWidget<UUserWidget>(this, MiniMapClass);
-
-
-	//if (MiniMap != nullptr) {
-	//	MiniMap->AddToViewport();
-//}
-
+    if (MiniMapClass)
+    {
+        MinimapUI = CreateWidget<UUserWidget>(this, MiniMapClass);
+        if (MinimapUI)
+        {
+            MinimapUI->AddToViewport();
+        }
+    }
 }
