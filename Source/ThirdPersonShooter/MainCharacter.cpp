@@ -7,7 +7,8 @@
 #include "Camera/CameraComponent.h"
 #include"GameFramework/SpringArmComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
-
+#include "Components/SceneComponent.h"
+#include"ProjectileBullet.h"
 //#include"Kismet/GameplayStatics.h"
 
 
@@ -39,6 +40,10 @@ AMainCharacter::AMainCharacter()
 	MiniMapCamera->SetupAttachment(CameraSpringArm);
 
 
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
+	ProjectileSpawnPoint->SetupAttachment(GetMesh()); 
+	ProjectileSpawnPoint->SetRelativeLocation(FVector(100.f, 0.f, 0.f));
+
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 }
@@ -53,7 +58,7 @@ void AMainCharacter::BeginPlay()
 	//{
 	//	UGameplayStatics::PlaySound2D(this, ShooterMusic);
 	//}
-
+	//AProjectileBullet* ShootingProjectileReference = Cast<AProjectileBullet>(ProjectileClass);
 }
 
 // Called every frame
@@ -75,8 +80,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AMainCharacter::Turn);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &AMainCharacter::Jump);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &AMainCharacter::StopJumping);
-	//PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AMainCharacter::Fire);
-	
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AMainCharacter::Fire);
 }
 
 void AMainCharacter::MoveForward(float AxisAmount)
@@ -100,6 +104,14 @@ void AMainCharacter::Turn(float AxisAmount)
 	AddControllerYawInput(AxisAmount);
 }
 
-//void AMainCharacter::Fire() {
+void AMainCharacter::Fire() {
 
-//}
+	if (!ProjectileClass || !ProjectileSpawnPoint) 
+		return;
+
+	const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+	const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+
+	GetWorld()->SpawnActor<AProjectileBullet>(ProjectileClass, SpawnLocation, SpawnRotation);
+
+}

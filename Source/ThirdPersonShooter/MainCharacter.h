@@ -14,6 +14,9 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class USceneComponent;
+class AProjectileBullet;
+
 UCLASS()
 class THIRDPERSONSHOOTER_API AMainCharacter : public ACharacter
 {
@@ -57,7 +60,16 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USceneCaptureComponent2D* MiniMapCamera;
-//private:
-	//void Fire();
+
+
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* ProjectileSpawnPoint;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AProjectileBullet> ProjectileClass;
+
+
+private:
+	void Fire();
 
 };
