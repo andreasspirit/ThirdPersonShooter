@@ -10,10 +10,10 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "Sound/SoundBase.h"
 #include "MainCharacter.generated.h"
+//#include "Kismet/GameplayStatics.h"
 
 class USpringArmComponent;
 class UCameraComponent;
-
 UCLASS()
 class THIRDPERSONSHOOTER_API AMainCharacter : public ACharacter
 {
@@ -45,7 +45,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-private:
+
 	void MoveForward(float AxisAmount);
 	void Strafe(float AxisAmount);
 	void LookUp(float AxisAmount);
@@ -57,4 +57,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	USceneCaptureComponent2D* MiniMapCamera;
+//private:
+	//void Fire();
+
 };

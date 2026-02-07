@@ -33,11 +33,14 @@ AMainCharacter::AMainCharacter()
 	CameraSpringArm->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f)); // look straight down
 	CameraSpringArm->bDoCollisionTest = false;
 
+
+	//minimap camera declaration
 	MiniMapCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("MiniMap camera"));
 	MiniMapCamera->SetupAttachment(CameraSpringArm);
 
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
 }
 
 // Called when the game starts or when spawned
@@ -71,8 +74,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AMainCharacter::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AMainCharacter::Turn);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &AMainCharacter::Jump);
-	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
-
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &AMainCharacter::StopJumping);
+	//PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AMainCharacter::Fire);
 	
 }
 
@@ -97,3 +100,6 @@ void AMainCharacter::Turn(float AxisAmount)
 	AddControllerYawInput(AxisAmount);
 }
 
+//void AMainCharacter::Fire() {
+
+//}

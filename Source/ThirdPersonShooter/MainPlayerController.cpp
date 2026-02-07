@@ -6,7 +6,8 @@
 
 void AMainPlayerController::BeginPlay() {
 	Super::BeginPlay();
-
+    
+    //displays the minimap attached to the player
     if (MiniMapClass)
     {
         MinimapUI = CreateWidget<UUserWidget>(this, MiniMapClass);
