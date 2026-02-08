@@ -53,12 +53,6 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	//if (LevelName == TEXT("MainMenuMap") && ShooterMusic)
-	//{
-	//	UGameplayStatics::PlaySound2D(this, ShooterMusic);
-	//}
-	//AProjectileBullet* ShootingProjectileReference = Cast<AProjectileBullet>(ProjectileClass);
 }
 
 // Called every frame

@@ -1,6 +1,7 @@
 #include "ProjectileBullet.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "ExplosiveBarrel.h"
 
 AProjectileBullet::AProjectileBullet()
 {
@@ -44,6 +45,6 @@ void AProjectileBullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 	const FHitResult& Hit)
 {
-	
+
 	Destroy();
 }
