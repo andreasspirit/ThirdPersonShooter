@@ -68,6 +68,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectileBullet> ProjectileClass;
 
+	UPROPERTY(EditAnywhere)
+	USoundBase* bullet_sound;
 
 private:
 	void Fire();

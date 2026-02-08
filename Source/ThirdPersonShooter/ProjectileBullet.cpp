@@ -17,7 +17,7 @@ AProjectileBullet::AProjectileBullet()
 	ProjectileMovement->InitialSpeed = MovementSpeed;
 	ProjectileMovement->MaxSpeed = MovementSpeed;
 	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->ProjectileGravityScale = 0.0f; // set 1.0f if you want drop
+	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
 	InitialLifeSpan = 5.0f;
 }

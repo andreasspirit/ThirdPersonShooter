@@ -26,10 +26,11 @@ private:
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Projectile")
-	float MovementSpeed = 2000.f;
+	float MovementSpeed = 8000.f;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 		const FHitResult& Hit);
+
 };

@@ -9,7 +9,7 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "Components/SceneComponent.h"
 #include"ProjectileBullet.h"
-//#include"Kismet/GameplayStatics.h"
+#include"Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -114,4 +114,10 @@ void AMainCharacter::Fire() {
 
 	GetWorld()->SpawnActor<AProjectileBullet>(ProjectileClass, SpawnLocation, SpawnRotation);
 
+	UGameplayStatics::PlaySound2D(
+		GetWorld(),
+		bullet_sound,
+		1.0f,
+		1.0f,
+		0.0f);
 }
