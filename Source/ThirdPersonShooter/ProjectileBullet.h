@@ -19,15 +19,22 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	//Mesh for the collision checks
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* BulletMesh = nullptr;
 
+	//Projectile movement particle
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
+
+	//Bullet Speed
 	UPROPERTY(EditAnywhere, Category = "Projectile")
 	float MovementSpeed = 8000.f;
 
+
+	//Handles logic on collision
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, FVector NormalImpulse,

@@ -40,7 +40,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Explosion")
 	bool bAffectOnlyPhysicsBodies = true;
 
-	
+	//Define the sound to play when explosion happens
 	UPROPERTY(EditAnywhere, Category = "Explosion")
 	USoundBase* ExplosionSound;
 

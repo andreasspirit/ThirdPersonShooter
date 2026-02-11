@@ -7,13 +7,16 @@ AProjectileBullet::AProjectileBullet()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	//Sets the bullet mesh
 	BulletMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BulletMesh"));
 	SetRootComponent(BulletMesh);
 
+	//Sets collisions on other actors
 	BulletMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	BulletMesh->SetCollisionProfileName(TEXT("BlockAllDynamic"));
 	BulletMesh->SetSimulatePhysics(false);
 
+	//Set up components and their attributes
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->InitialSpeed = MovementSpeed;
 	ProjectileMovement->MaxSpeed = MovementSpeed;
@@ -27,7 +30,7 @@ void AProjectileBullet::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	//Sets the speed of the bullet
 	if (ProjectileMovement)
 	{
 		ProjectileMovement->InitialSpeed = MovementSpeed;
@@ -41,6 +44,7 @@ void AProjectileBullet::BeginPlay()
 	}
 }
 
+//Hitting Actors and destroys them
 void AProjectileBullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 	const FHitResult& Hit)
