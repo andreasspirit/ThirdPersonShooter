@@ -4,6 +4,9 @@
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
+class UBehaviorTree;
+class UBlackboardComponent;
+
 UCLASS()
 class THIRDPERSONSHOOTER_API AEnemyAIController : public AAIController
 {
@@ -11,8 +14,9 @@ class THIRDPERSONSHOOTER_API AEnemyAIController : public AAIController
 
 protected:
 	virtual void BeginPlay() override;
-
-
+	public:
+		UPROPERTY(EditAnywhere,Category="AI")
+		UBehaviorTree* BehaviorTreeAsset;
 private:
 	UPROPERTY()
 	TArray<AActor*> Waypoints;

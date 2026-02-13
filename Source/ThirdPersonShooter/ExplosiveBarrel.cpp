@@ -94,10 +94,5 @@ void AExplosiveBarrel::Explode()
 
 
 	//Explosion Sound when the barrel gets hit by the projectile bullet
-		UGameplayStatics::PlaySound2D(
-		GetWorld(),
-		ExplosionSound,
-		1.0f,
-		1.0f,
-		0.0f);
+	UGameplayStatics::PlaySoundAtLocation(this, ExplosionSound, GetActorLocation());
 }
