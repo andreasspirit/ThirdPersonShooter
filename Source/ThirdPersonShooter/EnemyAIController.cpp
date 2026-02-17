@@ -1,25 +1,48 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "EnemyAIController.h"
 #include "Kismet/GameplayStatics.h"
-#include "Engine/TargetPoint.h"
-#include "BehaviorTree/BehaviorTree.h"
+#include "EnemyAICharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
-
-void AEnemyAIController::BeginPlay() {
+void AEnemyAIController::BeginPlay()
+{
 	Super::BeginPlay();
-	
-	//APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	//SetFocus(PlayerPawn);
 
-	//MoveToActor(PlayerPawn, 20.0f);
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATargetPoint::StaticClass(), Waypoints);
-
-	//MoveToActor(Waypoints[0]);
-
-	if (BehaviorTreeAsset) {
-		RunBehaviorTree(BehaviorTreeAsset);
+	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (PlayerPawn)
+	{
+		SetFocus(PlayerPawn);
+	}
+	if(EnemyBehaviorTree)
+	{
+		RunBehaviorTree(EnemyBehaviorTree);
 	}
 }
 
+void AEnemyAIController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	AIPawnRef = Cast<AEnemyAICharacter>(InPawn);
+}
+
+void AEnemyAIController::InvokeShootPlayer()
+{
+	if (!AIPawnRef || AIPawnRef->IsDead())
+	{
+		return;
+	}
+
+	// optional: keep facing player when shooting
+	if (!PlayerPawn)
+	{
+		PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	}
+
+	if (PlayerPawn)
+	{
+		SetFocus(PlayerPawn);
+	}
+
+	AIPawnRef->ShootPlayer();
+}

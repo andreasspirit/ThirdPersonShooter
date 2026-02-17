@@ -2,7 +2,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "ExplosiveBarrel.h"
-
+#include"Kismet/GameplayStatics.h"
 AProjectileBullet::AProjectileBullet()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -15,6 +15,10 @@ AProjectileBullet::AProjectileBullet()
 	BulletMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	BulletMesh->SetCollisionProfileName(TEXT("BlockAllDynamic"));
 	BulletMesh->SetSimulatePhysics(false);
+	BulletMesh->SetNotifyRigidBodyCollision(true);       
+	BulletMesh->SetGenerateOverlapEvents(false);
+	//BulletMesh->OnComponentHit.AddDynamic(this, &AProjectileBullet::OnHit);
+
 
 	//Set up components and their attributes
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
@@ -48,7 +52,19 @@ void AProjectileBullet::BeginPlay()
 void AProjectileBullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 	const FHitResult& Hit)
-{
+	
 
+{
+    UGameplayStatics::ApplyDamage(OtherActor, 20.f, GetInstigatorController(), this, UDamageType::StaticClass());
+    UGameplayStatics::ApplyDamage(
+	OtherActor,
+	20.f,
+	GetInstigatorController(),
+	this,
+	UDamageType::StaticClass()
+);
 	Destroy();
+	
 }
+
+

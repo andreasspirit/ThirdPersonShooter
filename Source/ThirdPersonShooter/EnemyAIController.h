@@ -1,23 +1,33 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
-class UBehaviorTree;
-class UBlackboardComponent;
+class AEnemyAICharacter;
 
 UCLASS()
 class THIRDPERSONSHOOTER_API AEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
 
-protected:
+public:
 	virtual void BeginPlay() override;
-	public:
-		UPROPERTY(EditAnywhere,Category="AI")
-		UBehaviorTree* BehaviorTreeAsset;
+	virtual void OnPossess(APawn* InPawn) override;
+
+	// Called by your BTTask
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	void InvokeShootPlayer();
+
 private:
 	UPROPERTY()
-	TArray<AActor*> Waypoints;
+	APawn* PlayerPawn = nullptr;
+
+	UPROPERTY()
+	AEnemyAICharacter* AIPawnRef = nullptr;
+
+
+	UPROPERTY(EditAnywhere)
+	UBehaviorTree* EnemyBehaviorTree;
 };
