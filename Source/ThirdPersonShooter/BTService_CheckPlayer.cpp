@@ -8,10 +8,7 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
 	AAIController* AICon = OwnerComp.GetAIOwner();
-	if (!AICon)
-	{
-		return;
-	}
+
 
 	APawn* AIPawn = AICon->GetPawn();
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(OwnerComp.GetWorld(), 0);
@@ -31,12 +28,18 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		return;
 	}
+	else {
+		OwnerComp.GetBlackboardComponent()->SetValueAsBool(TEXT("InAttackRange"), true);
+	}
 
 	// 2) Line of Sight check
-	if (!AICon->LineOfSightTo(PlayerPawn))
+	if (AICon->LineOfSightTo(PlayerPawn))
 	{
+		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
+		
+	}
+	else {
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
-		return;
 	}
 
 	// 3) In-front (FOV) check
@@ -54,7 +57,7 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	}
 	else
 	{
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey()); 
+		OwnerComp.GetBlackboardComponent()->ClearValue(TEXT("HasLineOfSight"));
 		OwnerComp.GetBlackboardComponent()->ClearValue(TEXT("TargetActor"));
 	}
 }

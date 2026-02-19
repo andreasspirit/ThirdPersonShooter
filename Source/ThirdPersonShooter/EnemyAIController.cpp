@@ -4,19 +4,32 @@
 #include "EnemyAICharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+
 void AEnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	if (PlayerPawn)
+	APawn*PlayerPawnRef = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (PlayerPawnRef)
 	{
-		SetFocus(PlayerPawn);
+		SetFocus(PlayerPawnRef);
 	}
 	if(EnemyBehaviorTree)
 	{
 		RunBehaviorTree(EnemyBehaviorTree);
 	}
+	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawnRef->GetActorLocation());
+}
+void AEnemyAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	APawn*PlayerPawnRef = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (LineOfSightTo(PlayerPawnRef)) {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawnRef->GetActorLocation());
+		GetBlackboardComponent()->SetValueAsObject(TEXT("TargetActor"),PlayerPawnRef);
+	}
+
+	
 }
 
 void AEnemyAIController::OnPossess(APawn* InPawn)

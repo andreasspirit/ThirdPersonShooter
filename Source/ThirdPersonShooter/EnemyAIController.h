@@ -14,6 +14,7 @@ class THIRDPERSONSHOOTER_API AEnemyAIController : public AAIController
 
 public:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	virtual void OnPossess(APawn* InPawn) override;
 
 	// Called by your BTTask
