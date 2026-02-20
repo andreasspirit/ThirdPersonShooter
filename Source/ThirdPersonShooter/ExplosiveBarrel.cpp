@@ -35,7 +35,7 @@ AExplosiveBarrel::AExplosiveBarrel()
 	RadialForce->Radius = ExplosionRadius;
 	RadialForce->ImpulseStrength = ExplosionImpulseStrength;
 	RadialForce->bImpulseVelChange = true;
-	RadialForce->bAutoActivate = false; // we trigger it manually
+	RadialForce->bAutoActivate = false; 
 	RadialForce->bIgnoreOwningActor = true;
 
 	// Physics effect

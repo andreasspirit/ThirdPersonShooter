@@ -26,7 +26,7 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	if (Distance > Range)
 	{
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
-		return;
+		
 	}
 	else {
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(TEXT("InAttackRange"), true);
