@@ -21,7 +21,7 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 
 	// 1) Distance check
 	const float Distance = FVector::Dist(AIPawn->GetActorLocation(), PlayerPawn->GetActorLocation());
-	const float Range = 3000.f;
+	const float Range = 5000.f;
 
 	if (Distance > Range)
 	{

@@ -19,7 +19,7 @@ public:
 	AEnemyAICharacter();
 
 	// Health
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI|Health")
+	UPROPERTY(EditAnywhere,Category = "AI|Health")
 	float Health = 100.f;
 
 	UFUNCTION(BlueprintCallable, Category = "AI|Health")

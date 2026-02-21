@@ -34,6 +34,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Health
+	UPROPERTY(EditAnywhere,Category = "MainCharacter|Health")
+	float Health = 100.f;
+
+	UFUNCTION(BlueprintCallable, Category = "MainCharacter|Health")
+	bool IsDead() const { return Health <= 0.f; }
+
     UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* CharacterMesh;
 
@@ -74,4 +81,6 @@ public:
 private:
 	void Fire();
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator, AActor* DamageCauser) override;
 };

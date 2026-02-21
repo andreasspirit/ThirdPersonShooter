@@ -111,3 +111,21 @@ void AMainCharacter::Fire() {
 	UGameplayStatics::PlaySoundAtLocation(this, bullet_sound, GetActorLocation()); 
 		
 }
+
+float AMainCharacter::TakeDamage(
+	float DamageAmount,
+	FDamageEvent const& DamageEvent,
+	AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Health -= ActualDamage;
+
+	if (Health <= 0.f)
+	{
+		Destroy(); // simple death
+	}
+
+	return ActualDamage;
+}
