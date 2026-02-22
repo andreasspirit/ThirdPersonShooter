@@ -3,6 +3,7 @@
 #include "Components/SceneComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
+#include "MainPlayerController.h"
 
 AEnemyAICharacter::AEnemyAICharacter()
 {
@@ -29,10 +30,7 @@ void AEnemyAICharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
-float AEnemyAICharacter::TakeDamage(
-	float DamageAmount,
-	FDamageEvent const& DamageEvent,
-	AController* EventInstigator,
+float AEnemyAICharacter::TakeDamage(float DamageAmount,FDamageEvent const& DamageEvent,AController* EventInstigator,
 	AActor* DamageCauser)
 {
 	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -41,7 +39,15 @@ float AEnemyAICharacter::TakeDamage(
 
 	if (Health <= 0.f)
 	{
-		Destroy(); // simple death
+
+        APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+        AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(PC);
+
+        if (MainPlayerController)
+        {
+            MainPlayerController->EnemiesKilledCount();
+        }
+        Destroy(); // simple death
 	}
 
 	return ActualDamage;

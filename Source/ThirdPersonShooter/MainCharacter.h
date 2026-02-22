@@ -9,7 +9,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Sound/SoundBase.h"
+#include "ThirdPersonShooterGameModeBase.h"
 #include "MainCharacter.generated.h"
+
 
 
 class USpringArmComponent;
@@ -77,6 +79,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USoundBase* bullet_sound;
+
+	UPROPERTY()
+	AThirdPersonShooterGameModeBase* GameModeRef;
 
 private:
 	void Fire();

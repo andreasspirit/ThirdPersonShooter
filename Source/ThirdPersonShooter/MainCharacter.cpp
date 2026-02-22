@@ -10,7 +10,7 @@
 #include "Components/SceneComponent.h"
 #include"ProjectileBullet.h"
 #include"Kismet/GameplayStatics.h"
-
+#include "MainPlayerController.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -52,7 +52,7 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
+	GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
 // Called every frame
@@ -124,6 +124,15 @@ float AMainCharacter::TakeDamage(
 
 	if (Health <= 0.f)
 	{
+
+		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+        AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(PC);
+
+
+        if (MainPlayerController)
+        {
+            MainPlayerController->MainCharacterDied();
+        }
 		Destroy(); // simple death
 	}
 

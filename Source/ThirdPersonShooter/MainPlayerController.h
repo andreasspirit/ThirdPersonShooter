@@ -25,5 +25,19 @@ private:
 	TSubclassOf<UUserWidget> MiniMapClass;
 
 	UPROPERTY()
-	UUserWidget* MinimapUI = nullptr;
+	UUserWidget* MinimapUI = nullptr;  //Minimap UI
+
+	UPROPERTY()
+	class AThirdPersonShooterGameModeBase* GameModeRef;     //reference to the gamemode
+
+	int32 EnemiesKilled; //counter for enemies
+
+public:
+	AMainPlayerController();
+
+	UFUNCTION(BlueprintCallable)
+	void EnemiesKilledCount();   // this function will get called when the enemy ai dies
+
+	UFUNCTION(BlueprintCallable)
+	void MainCharacterDied();    //this function will get called when the main character dies
 };
