@@ -8,7 +8,7 @@
 
 AMainPlayerController::AMainPlayerController()
 {
-    EnemiesKilled = 0;
+    EnemiesKilled = 0;          //starts with 0 enemies killed
 }
 void AMainPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -19,12 +19,12 @@ void AMainPlayerController::BeginPlay() {
         MinimapUI = CreateWidget<UUserWidget>(this, MiniMapClass);
         if (MinimapUI)
         {
-            MinimapUI->AddToViewport();
+            MinimapUI->AddToViewport();   //adds minimap ui widget to the viewport
         }
     }
 
     // Get reference to GameMode
-	GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	//GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 
 }
 
@@ -32,23 +32,26 @@ void AMainPlayerController::BeginPlay() {
 void AMainPlayerController::EnemiesKilledCount()
 {
 	EnemiesKilled++;
-	// Win after 3 kills
+	// Win after all 5 ai kills
 	if (EnemiesKilled >= 10)
 	{
-		if (GameModeRef)
+		AThirdPersonShooterGameModeBase* GameMode = Cast<AThirdPersonShooterGameModeBase>(GetWorld()->GetAuthGameMode());
+		if (GameMode)
 		{
-			GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
-			GameModeRef->GameWon();
+			//Get reference to the GameWon function of gamemode base
+			GameMode->GameWon();
 		}
 	}
 	
 }
 
-void AMainPlayerController::MainCharacterDied()
+void AMainPlayerController::MainCharacterDied()  //Lose the game when main character is dead
 {
-
-	if (GameModeRef)
+	AThirdPersonShooterGameModeBase* GameMode = Cast<AThirdPersonShooterGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (GameMode)
 	{
-		GameModeRef->GameOver();
+		//Get reference to the GameOver function of gamemode base
+		GameMode->GameOver();
 	}
 }
+

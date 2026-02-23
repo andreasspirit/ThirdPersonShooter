@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -21,6 +21,17 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UUserWidget> WinWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UUserWidget> LoseWidget;
+
+	// ← ADD THESE: Store created widgets so they don't get garbage collected
+	UPROPERTY()
+	class UUserWidget* GameModeWidget;
+	// Function to show widget
 
 	// Win the game
 	UFUNCTION(BlueprintCallable, Category = "Game Rules")

@@ -40,8 +40,8 @@ float AEnemyAICharacter::TakeDamage(float DamageAmount,FDamageEvent const& Damag
 	if (Health <= 0.f)
 	{
 
-        APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-        AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(PC);
+        APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+        AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(PlayerController);
 
         if (MainPlayerController)
         {

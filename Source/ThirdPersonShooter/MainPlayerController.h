@@ -27,10 +27,16 @@ private:
 	UPROPERTY()
 	UUserWidget* MinimapUI = nullptr;  //Minimap UI
 
-	UPROPERTY()
-	class AThirdPersonShooterGameModeBase* GameModeRef;     //reference to the gamemode
+    //reference to the gamemode
 
 	int32 EnemiesKilled; //counter for enemies
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> WinWidget;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> LoseWidget;
+
 
 public:
 	AMainPlayerController();
