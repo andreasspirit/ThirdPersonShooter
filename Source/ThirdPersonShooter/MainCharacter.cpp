@@ -46,6 +46,9 @@ AMainCharacter::AMainCharacter()
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
+
+	Health = MaxHealth;
+
 }
 
 // Called when the game starts or when spawned
@@ -121,12 +124,12 @@ float AMainCharacter::TakeDamage(
 	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	Health -= ActualDamage;
-
+	AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(GetController());
+	if (MainPlayerController) {
+		MainPlayerController->UpdatePlayerHUD(Health, MaxHealth);
+	}
 	if (Health <= 0.f)
 	{
-
-		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-        AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(PlayerController);
 
 
         if (MainPlayerController)

@@ -37,6 +37,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UUserWidget> LoseWidget;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> HUDWidgetClass;
+
+	UPROPERTY()
+	class UUserWidget* HUDWidget;
 
 public:
 	AMainPlayerController();
@@ -46,4 +51,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void MainCharacterDied();    //this function will get called when the main character dies
+
+	// Function to update HUD
+	UFUNCTION(BlueprintCallable)
+	void UpdatePlayerHUD(float CurrentHealth, float MaxHealth);
 };

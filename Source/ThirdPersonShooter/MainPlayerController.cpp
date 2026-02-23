@@ -1,14 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MainPlayerController.h"
 #include"Blueprint/UserWidget.h"
 #include "ThirdPersonShooterGameModeBase.h"
 #include"Kismet/GameplayStatics.h"
+#include "Components/ProgressBar.h" 
+#include "Components/TextBlock.h"
 
 AMainPlayerController::AMainPlayerController()
 {
     EnemiesKilled = 0;          //starts with 0 enemies killed
+	HUDWidgetClass = nullptr;
+	HUDWidget = nullptr;
 }
 void AMainPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -23,8 +27,17 @@ void AMainPlayerController::BeginPlay() {
         }
     }
 
-    // Get reference to GameMode
-	//GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	if(HUDWidgetClass)
+	{
+		HUDWidget = CreateWidget<UUserWidget>(this, HUDWidgetClass);
+
+		if (HUDWidget)
+		{
+			HUDWidget->AddToViewport();
+		}
+	}
+
+  
 
 }
 
@@ -55,3 +68,29 @@ void AMainPlayerController::MainCharacterDied()  //Lose the game when main chara
 	}
 }
 
+
+
+
+void AMainPlayerController::UpdatePlayerHUD(float CurrentHealth, float MaxHealth)
+{
+
+
+	// Update health bar
+	UProgressBar* HealthBar = Cast<UProgressBar>(HUDWidget->GetWidgetFromName(TEXT("HealthBar")));
+	if (HealthBar)
+	{
+		float Percent = CurrentHealth / MaxHealth;
+		HealthBar->SetPercent(Percent);
+		
+	}
+
+
+	// Update health text
+	UTextBlock* HealthText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("HealthText")));
+	if (HealthText)
+	{
+		FString HealthString = FString::Printf(TEXT("%.0f / %.0f"), CurrentHealth, MaxHealth);
+		HealthText->SetText(FText::FromString(HealthString));
+	}
+
+}

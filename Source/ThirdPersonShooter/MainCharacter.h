@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere,Category = "MainCharacter|Health")
 	float Health = 100.f;
 
+	UPROPERTY(EditAnywhere, Category = "MainCharacter|Health")
+	float MaxHealth = 100.f;
+
 	UFUNCTION(BlueprintCallable, Category = "MainCharacter|Health")
 	bool IsDead() const { return Health <= 0.f; }
 
