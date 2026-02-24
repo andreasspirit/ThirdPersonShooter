@@ -17,7 +17,7 @@ AProjectileBullet::AProjectileBullet()
 	BulletMesh->SetSimulatePhysics(false);
 	BulletMesh->SetNotifyRigidBodyCollision(true);       
 	BulletMesh->SetGenerateOverlapEvents(false);
-	//BulletMesh->OnComponentHit.AddDynamic(this, &AProjectileBullet::OnHit);
+	
 
 
 	//Set up components and their attributes
@@ -27,7 +27,7 @@ AProjectileBullet::AProjectileBullet()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
-	InitialLifeSpan = 5.0f;
+	InitialLifeSpan = 1.0f;   //Destroy after 1 sec of spawning so the range is smaller
 }
 
 void AProjectileBullet::BeginPlay()

@@ -14,17 +14,16 @@ AExplosiveBarrel::AExplosiveBarrel()
 
 	//Enable collision with physics 
 	IntactMesh->SetSimulatePhysics(true);
-	IntactMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	IntactMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);   //Enables query and physics collision
 	IntactMesh->SetNotifyRigidBodyCollision(true); // generates hit events
-	IntactMesh->SetGenerateOverlapEvents(false);
 
 	//Set the broken mesh of the barrel
 	BrokenMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BrokenMesh"));
 	BrokenMesh->SetupAttachment(RootComponent);
 
 	BrokenMesh->SetSimulatePhysics(true);
-	BrokenMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	BrokenMesh->SetNotifyRigidBodyCollision(false);
+	BrokenMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);   //Enables query and physics collision
+
 	BrokenMesh->SetHiddenInGame(true);
 	BrokenMesh->SetVisibility(false);
 
@@ -33,8 +32,8 @@ AExplosiveBarrel::AExplosiveBarrel()
 
 	//Initialise radial force radius and strength
 	RadialForce->Radius = ExplosionRadius;
-	RadialForce->ImpulseStrength = ExplosionImpulseStrength;
-	RadialForce->bImpulseVelChange = true;
+	RadialForce->ImpulseStrength = ExplosionImpulseStrength;        
+	RadialForce->bImpulseVelChange = true;    
 	RadialForce->bAutoActivate = false; 
 	RadialForce->bIgnoreOwningActor = true;
 

@@ -55,8 +55,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* Camera;
 
-	//UPROPERTY(EditAnywhere)
-	//USoundBase* ShooterMusic;
+	// Heal the character
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void Heal(float Amount);
+
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

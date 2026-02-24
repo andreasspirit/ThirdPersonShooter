@@ -141,3 +141,19 @@ float AMainCharacter::TakeDamage(
 
 	return ActualDamage;
 }
+
+
+void AMainCharacter::Heal(float Amount)
+{
+
+	// Add health (don't exceed max)
+	Health = FMath::Clamp(Health + Amount, 0.0f, MaxHealth);
+
+
+	// Update HUD
+	AMainPlayerController* PlayerController = Cast<AMainPlayerController>(GetController());
+	if (PlayerController)
+	{
+		PlayerController->UpdatePlayerHUD(Health, MaxHealth);
+	}
+}

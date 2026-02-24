@@ -34,11 +34,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Explosion")
 	float ExplosionImpulseStrength = 2500.f;
 
+
+	//Explosion radius
 	UPROPERTY(EditAnywhere, Category = "Explosion")
 	float ExplosionRadius = 400.f;
 
-	UPROPERTY(EditAnywhere, Category = "Explosion")
-	bool bAffectOnlyPhysicsBodies = true;
 
 	//Define the sound to play when explosion happens
 	UPROPERTY(EditAnywhere, Category = "Explosion")
@@ -47,6 +47,9 @@ protected:
 	// Prevent exploding twice
 	bool bExploded = false;
 
+
+	//Function declaration of interacthit and ComponentHit for handling collision between 
+	// the barrel and the projectile bullet
 	UFUNCTION()
 	void OnIntactHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
