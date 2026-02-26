@@ -36,6 +36,9 @@ private:
 	UPROPERTY(EditAnywhere,Category = "Pickup")
 	float Healing;
 
+	UPROPERTY(EditAnywhere)
+	class USoundBase* HealingSound;
+
 	// Trigger event - called when player overlaps
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

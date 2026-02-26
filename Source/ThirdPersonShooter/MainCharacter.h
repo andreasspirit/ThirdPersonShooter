@@ -40,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere,Category = "MainCharacter|Health")
 	float Health = 100.f;
 
+	//Max Health
 	UPROPERTY(EditAnywhere, Category = "MainCharacter|Health")
 	float MaxHealth = 100.f;
 
@@ -72,6 +73,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+	//Character Movement with axis amount
 	void MoveForward(float AxisAmount);
 	void Strafe(float AxisAmount);
 	void LookUp(float AxisAmount);
@@ -98,8 +101,11 @@ public:
 	AThirdPersonShooterGameModeBase* GameModeRef;
 
 private:
+	//Shooting function declaration
 	void Fire();
 
+
+	//Function declaration for taking damage
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 		class AController* EventInstigator, AActor* DamageCauser) override;
 

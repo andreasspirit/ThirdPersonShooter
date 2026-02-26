@@ -23,8 +23,11 @@ AMainCharacter::AMainCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->SetupAttachment(RootComponent);
+    SpringArm->bUsePawnControlRotation = true;
+
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
+	
 
 
 	//Spring Arm for Minimap
@@ -52,6 +55,8 @@ AMainCharacter::AMainCharacter()
 	FireRate = 0.3f;
 	bCanFire = true;
 
+
+	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
 }
 
 // Called when the game starts or when spawned
@@ -86,12 +91,12 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::MoveForward(float AxisAmount)
 {
 	
-	AddMovementInput(GetActorRightVector() * AxisAmount);
+	 AddMovementInput(GetActorForwardVector(),AxisAmount);
 }
 
 void AMainCharacter::Strafe(float AxisAmount)
 {
-	AddMovementInput(GetActorForwardVector() * AxisAmount);
+	AddMovementInput(GetActorRightVector(), AxisAmount);
 }
 
 void AMainCharacter::LookUp(float AxisAmount)

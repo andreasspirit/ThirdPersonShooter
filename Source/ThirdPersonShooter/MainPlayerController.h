@@ -27,9 +27,8 @@ private:
 	UPROPERTY()
 	UUserWidget* MinimapUI = nullptr;  //Minimap UI
 
-    //reference to the gamemode
 
-	int32 EnemiesKilled; //counter for enemies
+	int32 EnemiesKilled; //counter for enemies killed
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UUserWidget> WinWidget;

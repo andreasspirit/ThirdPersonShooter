@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "MainCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMedKit::AMedKit()
@@ -53,7 +54,8 @@ void AMedKit::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		// Heal the player
 		Player->Heal(Healing);
-
+		//Explosion Sound when the barrel gets hit by the projectile bullet
+		UGameplayStatics::PlaySoundAtLocation(this, HealingSound, GetActorLocation());
 		// Destroy the pickup
 		Destroy();
 	}
