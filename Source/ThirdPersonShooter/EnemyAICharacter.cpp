@@ -30,12 +30,13 @@ void AEnemyAICharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
+
 float AEnemyAICharacter::TakeDamage(float DamageAmount,FDamageEvent const& DamageEvent,AController* EventInstigator,
 	AActor* DamageCauser)
 {
 	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
-	Health -= ActualDamage;
+	Health -= ActualDamage;     //Decrease health when taking damage
 
 	if (Health <= 0.f)
 	{
@@ -45,7 +46,7 @@ float AEnemyAICharacter::TakeDamage(float DamageAmount,FDamageEvent const& Damag
 
         if (MainPlayerController)
         {
-            MainPlayerController->EnemiesKilledCount();
+            MainPlayerController->EnemiesKilledCount();  //count enemies killed for winning condition
         }
         Destroy(); // simple death
 	}
@@ -100,11 +101,12 @@ void AEnemyAICharacter::ShootPlayer()
         }
     }
 
-    // Fire rate cooldown
+    // Fire rate cooldown with handling timer
     bCanFire = false;
     GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &AEnemyAICharacter::ResetFire, FireRate, false);
 
 }
+
 
 void AEnemyAICharacter::ResetFire()
 {

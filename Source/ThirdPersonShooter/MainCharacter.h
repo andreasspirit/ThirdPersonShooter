@@ -60,6 +60,14 @@ public:
 	void Heal(float Amount);
 
 
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float FireRate;  // Time between shots in seconds
+
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	bool bCanFire;
+
+	FTimerHandle FireRateTimerHandle;  // Timer for fire rate
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -94,4 +102,9 @@ private:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 		class AController* EventInstigator, AActor* DamageCauser) override;
+
+
+
+	// Reset fire cooldown
+	void ResetFire();
 };

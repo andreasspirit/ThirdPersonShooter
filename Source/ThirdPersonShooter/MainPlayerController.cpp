@@ -37,10 +37,18 @@ void AMainPlayerController::BeginPlay() {
 		}
 	}
 
+
+	if (CrossHairClass)
+	{
+		CrossHair = CreateWidget<UUserWidget>(this, CrossHairClass);
+		if (CrossHair)
+		{
+			CrossHair->AddToViewport();   //adds minimap ui widget to the viewport
+		}
+	}
   
-
-}
-
+}   
+ 
 
 void AMainPlayerController::EnemiesKilledCount()
 {

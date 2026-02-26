@@ -7,10 +7,10 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	AAIController* AICon = OwnerComp.GetAIOwner();
+	AAIController* AIController = OwnerComp.GetAIOwner();
 
 
-	APawn* AIPawn = AICon->GetPawn();
+	APawn* AIPawn = AIController->GetPawn();
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(OwnerComp.GetWorld(), 0);
 
 	if (!AIPawn || !PlayerPawn)
@@ -19,7 +19,7 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 		return;
 	}
 
-	// 1) Distance check
+	//Distance check
 	const float Distance = FVector::Dist(AIPawn->GetActorLocation(), PlayerPawn->GetActorLocation());
 	const float Range = 5000.f;
 
@@ -28,13 +28,17 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 		
 	}
-	else {
+	else
+	{
+		//
+		//Gets the attack range of AI as boolean from blackboard 
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(TEXT("InAttackRange"), true);
 	}
 
 	// 2) Line of Sight check
-	if (AICon->LineOfSightTo(PlayerPawn))
-	{
+	if (AIController->LineOfSightTo(PlayerPawn))
+	{		
+		//Gets the line of sight of AI as boolean from blackboard 
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
 		
 	}
@@ -42,15 +46,19 @@ void UBTService_CheckPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 	}
 
-	// 3) In-front (FOV) check
+	//  In-front of it check
 	const FVector ToPlayer = (PlayerPawn->GetActorLocation() - AIPawn->GetActorLocation()).GetSafeNormal();
 	const float Dot = FVector::DotProduct(AIPawn->GetActorForwardVector(), ToPlayer);
 
-	// 0.0 = 180° vision, 0.5 ~ 60° cone, 0.7 ~ 45° cone
+
 	const float FOVDotThreshold = 0.3f;
 
+
+	//Dot Product declaration
 	if (Dot > FOVDotThreshold)
 	{
+
+
 
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("TargetActor"), PlayerPawn);

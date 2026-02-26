@@ -15,7 +15,7 @@ AExplosiveBarrel::AExplosiveBarrel()
 	//Enable collision with physics 
 	IntactMesh->SetSimulatePhysics(true);
 	IntactMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);   //Enables query and physics collision
-	IntactMesh->SetNotifyRigidBodyCollision(true); // generates hit events
+	IntactMesh->SetNotifyRigidBodyCollision(true);      // generates hit events
 
 	//Set the broken mesh of the barrel
 	BrokenMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BrokenMesh"));
@@ -48,10 +48,11 @@ void AExplosiveBarrel::BeginPlay()
 	// Hook the hit event to the intact mesh
 	IntactMesh->OnComponentHit.AddDynamic(this, &AExplosiveBarrel::OnIntactHit);
 
-	// Make radius/impulse 
+	// Apply radius/impulse 
 	RadialForce->Radius = ExplosionRadius;
 	RadialForce->ImpulseStrength = ExplosionImpulseStrength;
 }
+
 
 void AExplosiveBarrel::OnIntactHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -63,7 +64,7 @@ void AExplosiveBarrel::OnIntactHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 	{
 		Explode();
 
-		OtherActor->Destroy();
+		OtherActor->Destroy();   
 	}
 
 }
@@ -73,13 +74,13 @@ void AExplosiveBarrel::Explode()
 	bExploded = true;
 
 	// Swap meshes from the basic barrel mesh to the broken one
-	IntactMesh->SetHiddenInGame(true);
-	IntactMesh->SetVisibility(false);
+	IntactMesh->SetHiddenInGame(true);    //sets the barrel mesh hidden after explosion
+	IntactMesh->SetVisibility(false);        //sets the barrel mesh not visible
 	IntactMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
-	BrokenMesh->SetHiddenInGame(false);
-	BrokenMesh->SetVisibility(true);
-	BrokenMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	BrokenMesh->SetHiddenInGame(false);     //when the barrel explodes the broken mesh is not hidded 
+	BrokenMesh->SetVisibility(true);           //sets the broken mesh visible		
+	BrokenMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);    
 
 	// Place broken mesh exactly where the intact one was
 	BrokenMesh->SetWorldTransform(IntactMesh->GetComponentTransform());
@@ -89,7 +90,7 @@ void AExplosiveBarrel::Explode()
 
 
 	// Small impulse kick when the barrel is hitted
-	BrokenMesh->AddImpulse(FVector(0, 0, 1) * 200.f, NAME_None, true);
+	BrokenMesh->AddImpulse(FVector(0, 0, 1) * 200.f);
 
 
 	//Explosion Sound when the barrel gets hit by the projectile bullet

@@ -40,9 +40,17 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UUserWidget> HUDWidgetClass;
 
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UUserWidget> CrossHairClass;
+
 	UPROPERTY()
 	class UUserWidget* HUDWidget;
 
+
+
+	UPROPERTY()
+	class UUserWidget* CrossHair;
 public:
 	AMainPlayerController();
 
@@ -55,4 +63,7 @@ public:
 	// Function to update HUD
 	UFUNCTION(BlueprintCallable)
 	void UpdatePlayerHUD(float CurrentHealth, float MaxHealth);
+
+
+
 };

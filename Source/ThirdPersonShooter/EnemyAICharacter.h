@@ -22,6 +22,7 @@ public:
 	UPROPERTY(EditAnywhere,Category = "AI|Health")
 	float Health = 100.f;
 
+	//Check if enemy AI is dead
 	UFUNCTION(BlueprintCallable, Category = "AI|Health")
 	bool IsDead() const { return Health <= 0.f; }
 
@@ -29,13 +30,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI|Combat")
 	void ShootPlayer();
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI|Combat")
+	//UPROPERTY(VisibleAnywhere, Category = "AI|Combat")
 	//USceneComponent* ProjectileSpawnPoint;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI|Combat")
+	//UPROPERTY(EditAnywhere, Category = "AI|Combat")
 	//TSubclassOf<AProjectileBullet> ProjectileClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI|Combat")
+	
+	UPROPERTY(EditAnywhere, Category = "AI|Combat")
 	USoundBase* bullet_sound = nullptr;
 
 	UPROPERTY(EditAnywhere)
@@ -46,13 +48,15 @@ public:
 
 	// RAYCASTING PROPERTIES
 	// Maximum range of the raycast
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat|Raycasting")
+	UPROPERTY(EditAnywhere, Category = "Combat|Raycasting")
 	float RaycastRange;
 
 	// Damage dealt by each shot
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat|Raycasting")
+	UPROPERTY(EditAnywhere, Category = "Combat|Raycasting")
 	float RaycastDamage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float FireRate;  // Time between shots in seconds
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
@@ -67,6 +71,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+
+	
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 		class AController* EventInstigator, AActor* DamageCauser) override;
 

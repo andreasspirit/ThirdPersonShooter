@@ -9,36 +9,31 @@ void AEnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APawn*PlayerPawnRef = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	if (PlayerPawnRef)
+	ACharacter* PlayerCharacterRef = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	if (PlayerCharacterRef)
 	{
-		SetFocus(PlayerPawnRef);
+		SetFocus(PlayerCharacterRef);
 	}
 	if(EnemyBehaviorTree)
 	{
 		RunBehaviorTree(EnemyBehaviorTree);
 	}
-	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawnRef->GetActorLocation());
+	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerCharacterRef->GetActorLocation());
 }
 void AEnemyAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	APawn*PlayerPawnRef = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	if (LineOfSightTo(PlayerPawnRef)) {
-        GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerPawnRef->GetActorLocation());
-		GetBlackboardComponent()->SetValueAsObject(TEXT("TargetActor"),PlayerPawnRef);
+	ACharacter*PlayerCharacterRef = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+	//LineOfSIght created in blackboard base to get the player location
+	if (LineOfSightTo(PlayerCharacterRef)) {
+        GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerLocation"), PlayerCharacterRef->GetActorLocation());
+		GetBlackboardComponent()->SetValueAsObject(TEXT("TargetActor"),PlayerCharacterRef);
 	}
 
 	
 }
-
-void AEnemyAIController::OnPossess(APawn* InPawn)
-{
-	Super::OnPossess(InPawn);
-
-	AIPawnRef = Cast<AEnemyAICharacter>(InPawn);
-}
-
+//keep facing player when shooting
 void AEnemyAIController::InvokeShootPlayer()
 {
 	if (!AIPawnRef || AIPawnRef->IsDead())
@@ -46,15 +41,15 @@ void AEnemyAIController::InvokeShootPlayer()
 		return;
 	}
 
-	// optional: keep facing player when shooting
-	if (!PlayerPawn)
+	
+	if (!PlayerCharacter)
 	{
-		PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	}
 
-	if (PlayerPawn)
+	if (PlayerCharacter)
 	{
-		SetFocus(PlayerPawn);
+		SetFocus(PlayerCharacter);  
 	}
 
 	AIPawnRef->ShootPlayer();

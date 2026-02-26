@@ -49,6 +49,9 @@ AMainCharacter::AMainCharacter()
 
 	Health = MaxHealth;
 
+	FireRate = 0.3f;
+	bCanFire = true;
+
 }
 
 // Called when the game starts or when spawned
@@ -103,6 +106,8 @@ void AMainCharacter::Turn(float AxisAmount)
 
 void AMainCharacter::Fire() {
 
+	if (!bCanFire) return;
+
 	if (!ProjectileClass || !ProjectileSpawnPoint) 
 		return;
 
@@ -112,6 +117,10 @@ void AMainCharacter::Fire() {
 	GetWorld()->SpawnActor<AProjectileBullet>(ProjectileClass, SpawnLocation, SpawnRotation);
 
 	UGameplayStatics::PlaySoundAtLocation(this, bullet_sound, GetActorLocation()); 
+
+	// Fire rate cooldown
+	bCanFire = false;
+	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &AMainCharacter::ResetFire, FireRate, false);
 		
 }
 
@@ -156,4 +165,9 @@ void AMainCharacter::Heal(float Amount)
 	{
 		PlayerController->UpdatePlayerHUD(Health, MaxHealth);
 	}
+}
+
+void AMainCharacter::ResetFire()
+{
+	bCanFire = true;
 }

@@ -54,5 +54,8 @@ protected:
 	void OnIntactHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+
+
+	//Function for the explosion 
 	void Explode();
 };

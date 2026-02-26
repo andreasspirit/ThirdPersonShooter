@@ -15,7 +15,7 @@ class THIRDPERSONSHOOTER_API AEnemyAIController : public AAIController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	virtual void OnPossess(APawn* InPawn) override;
+
 
 	// Called by your BTTask
 	UFUNCTION(BlueprintCallable, Category = "AI")
@@ -23,7 +23,7 @@ public:
 
 private:
 	UPROPERTY()
-	APawn* PlayerPawn = nullptr;
+	ACharacter* PlayerCharacter = nullptr;
 
 	UPROPERTY()
 	AEnemyAICharacter* AIPawnRef = nullptr;

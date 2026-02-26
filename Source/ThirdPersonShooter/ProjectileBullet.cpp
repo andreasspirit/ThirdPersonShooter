@@ -27,7 +27,7 @@ AProjectileBullet::AProjectileBullet()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
-	InitialLifeSpan = 1.0f;   //Destroy after 1 sec of spawning so the range is smaller
+	InitialLifeSpan = 0.6f;   //Destroy after 1 sec of spawning so the range is smaller
 }
 
 void AProjectileBullet::BeginPlay()
