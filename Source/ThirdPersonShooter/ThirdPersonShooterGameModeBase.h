@@ -28,10 +28,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UUserWidget> LoseWidget;
 
-	// ← ADD THESE: Store created widgets so they don't get garbage collected
+
 	UPROPERTY()
 	class UUserWidget* GameModeWidget;
-	// Function to show widget
+
 
 	// Win the game
 	UFUNCTION(BlueprintCallable, Category = "Game Rules")

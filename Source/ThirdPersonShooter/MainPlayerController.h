@@ -19,8 +19,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//declare the UUserWidget which will implement the Minimap widget 
+	
 private:
+	
+	//declare the UUserWidget which will implement the Minimap widget 
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UUserWidget> MiniMapClass;
 

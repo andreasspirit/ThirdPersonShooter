@@ -10,7 +10,7 @@
 AThirdPersonShooterGameModeBase::AThirdPersonShooterGameModeBase() {
 	WinWidget = nullptr;
 	LoseWidget = nullptr;
-	GameModeWidget = nullptr;  // ← Initialize
+	GameModeWidget = nullptr;  
 }
 
 void AThirdPersonShooterGameModeBase::BeginPlay() {
@@ -18,10 +18,10 @@ void AThirdPersonShooterGameModeBase::BeginPlay() {
 }
 
 void AThirdPersonShooterGameModeBase::GameWon() {
-//	UGameplayStatics::OpenLevel(GetWorld(), TEXT("GameWonLevel"));
+
 	if (WinWidget)
 	{
-		// Create widget and STORE it in CurrentWidget (prevents garbage collection)
+		// Create widget and set it in CurrentWidget 
 		GameModeWidget = CreateWidget<UUserWidget>(GetWorld(), WinWidget);
 
 		if (GameModeWidget)
@@ -40,10 +40,12 @@ void AThirdPersonShooterGameModeBase::GameWon() {
 	}
 }
 
+
+//game Over Widget
 void AThirdPersonShooterGameModeBase::GameOver() {
 	if (LoseWidget)
 	{
-		// Create widget and STORE it in CurrentWidget (prevents garbage collection)
+		// Create widget and sets it in CurrentWidget (prevents garbage collection)
 		GameModeWidget = CreateWidget<UUserWidget>(GetWorld(), LoseWidget);
 
 		if (GameModeWidget)

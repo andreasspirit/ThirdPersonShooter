@@ -50,19 +50,21 @@ AMainCharacter::AMainCharacter()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 
-	Health = MaxHealth;
+	Health = MaxHealth;        //sets starting health as the max health 
 
-	FireRate = 0.3f;
-	bCanFire = true;
+	FireRate = 0.6f;             //Fire rate which is implemented with timer
+	bCanFire = true;           
 
 
-	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 900.0f;          //Max Character Speed
 }
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Sets the Game Mode Base 
 	GameModeRef = Cast<AThirdPersonShooterGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
@@ -78,6 +80,8 @@ void AMainCharacter::Tick(float DeltaTime)
 // Called to bind functionality to input
 void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+
+	//Input binds for character Movement and mechanics
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis(TEXT("Strafe"), this, &AMainCharacter::Strafe);
@@ -88,27 +92,34 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &AMainCharacter::Fire);
 }
 
+
+//Move Forward declaration			
 void AMainCharacter::MoveForward(float AxisAmount)
 {
 	
 	 AddMovementInput(GetActorForwardVector(),AxisAmount);
 }
 
+//Move left or right
 void AMainCharacter::Strafe(float AxisAmount)
 {
 	AddMovementInput(GetActorRightVector(), AxisAmount);
 }
 
+//Look up or down with moving the mouse Y
 void AMainCharacter::LookUp(float AxisAmount)
 {
 	AddControllerPitchInput(AxisAmount);
 }
 
+//Look to your right or left moving the mouse X
 void AMainCharacter::Turn(float AxisAmount)
 {
 	AddControllerYawInput(AxisAmount);
 }
 
+
+//Shooting function for the  main character
 void AMainCharacter::Fire() {
 
 	if (!bCanFire) return;
@@ -116,16 +127,17 @@ void AMainCharacter::Fire() {
 	if (!ProjectileClass || !ProjectileSpawnPoint) 
 		return;
 
-	const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
-	const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+	const FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();    //gets the location of the projectile bullet component
+	const FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();    //gets the rotation of the projectile bullet component
 
-	GetWorld()->SpawnActor<AProjectileBullet>(ProjectileClass, SpawnLocation, SpawnRotation);
+	GetWorld()->SpawnActor<AProjectileBullet>(ProjectileClass, SpawnLocation, SpawnRotation);        //spawns the bullet
 
+	//Play shooting sound 
 	UGameplayStatics::PlaySoundAtLocation(this, bullet_sound, GetActorLocation()); 
 
 	// Fire rate cooldown
 	bCanFire = false;
-	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &AMainCharacter::ResetFire, FireRate, false);
+	GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &AMainCharacter::ResetFire, FireRate, false); //Timer handle for shooting
 		
 }
 
@@ -139,10 +151,12 @@ float AMainCharacter::TakeDamage(
 
 	Health -= ActualDamage;
 	AMainPlayerController* MainPlayerController = Cast<AMainPlayerController>(GetController());
+
+
 	if (MainPlayerController) {
-		MainPlayerController->UpdatePlayerHUD(Health, MaxHealth);
+		MainPlayerController->UpdatePlayerHUD(Health, MaxHealth);   //calls the health bar ui
 	}
-	if (Health <= 0.f)
+	if (Health <= 0.f)   //if health is 0 the player dies
 	{
 
 
@@ -160,11 +174,11 @@ float AMainCharacter::TakeDamage(
 void AMainCharacter::Heal(float Amount)
 {
 
-	// Add health (don't exceed max)
+	// Add health
 	Health = FMath::Clamp(Health + Amount, 0.0f, MaxHealth);
 
 
-	// Update HUD
+	// Update HUD of health bar
 	AMainPlayerController* PlayerController = Cast<AMainPlayerController>(GetController());
 	if (PlayerController)
 	{
@@ -172,7 +186,8 @@ void AMainCharacter::Heal(float Amount)
 	}
 }
 
+
 void AMainCharacter::ResetFire()
 {
-	bCanFire = true;
+	bCanFire = true;   //calling the fire function when the timer cooldown is reset
 }

@@ -27,7 +27,7 @@ AProjectileBullet::AProjectileBullet()
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
-	InitialLifeSpan = 0.6f;   //Destroy after 1 sec of spawning so the range is smaller
+	InitialLifeSpan = 0.7f;   //Destroy after 0.6 sec of spawning so the range is smaller
 }
 
 void AProjectileBullet::BeginPlay()
@@ -52,17 +52,9 @@ void AProjectileBullet::BeginPlay()
 void AProjectileBullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse,
 	const FHitResult& Hit)
-	
 
 {
     UGameplayStatics::ApplyDamage(OtherActor, 20.f, GetInstigatorController(), this, UDamageType::StaticClass());
-    UGameplayStatics::ApplyDamage(
-	OtherActor,
-	20.f,
-	GetInstigatorController(),
-	this,
-	UDamageType::StaticClass()
-);
 	Destroy();
 	
 }

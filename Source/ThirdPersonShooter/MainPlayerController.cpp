@@ -33,7 +33,7 @@ void AMainPlayerController::BeginPlay() {
 
 		if (HUDWidget)
 		{
-			HUDWidget->AddToViewport();
+			HUDWidget->AddToViewport();       //adds the healthbar ui
 		}
 	}
 
@@ -43,18 +43,19 @@ void AMainPlayerController::BeginPlay() {
 		CrossHair = CreateWidget<UUserWidget>(this, CrossHairClass);
 		if (CrossHair)
 		{
-			CrossHair->AddToViewport();   //adds minimap ui widget to the viewport
+			CrossHair->AddToViewport();   //adds crosshair ui widget to the viewport
 		}
 	}
   
 }   
  
 
+//Counts enemies killed and sets the winning game mode when all 5 ai characters die
 void AMainPlayerController::EnemiesKilledCount()
 {
 	EnemiesKilled++;
 	// Win after all 5 ai kills
-	if (EnemiesKilled >= 10)
+	if (EnemiesKilled >= 5)
 	{
 		AThirdPersonShooterGameModeBase* GameMode = Cast<AThirdPersonShooterGameModeBase>(GetWorld()->GetAuthGameMode());
 		if (GameMode)
@@ -79,6 +80,7 @@ void AMainPlayerController::MainCharacterDied()  //Lose the game when main chara
 
 
 
+//Health Bar HUD 
 void AMainPlayerController::UpdatePlayerHUD(float CurrentHealth, float MaxHealth)
 {
 
@@ -88,7 +90,7 @@ void AMainPlayerController::UpdatePlayerHUD(float CurrentHealth, float MaxHealth
 	if (HealthBar)
 	{
 		float Percent = CurrentHealth / MaxHealth;
-		HealthBar->SetPercent(Percent);
+		HealthBar->SetPercent(Percent);                 //sets the percent of the health bar
 		
 	}
 
@@ -97,7 +99,7 @@ void AMainPlayerController::UpdatePlayerHUD(float CurrentHealth, float MaxHealth
 	UTextBlock* HealthText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("HealthText")));
 	if (HealthText)
 	{
-		FString HealthString = FString::Printf(TEXT("%.0f / %.0f"), CurrentHealth, MaxHealth);
+		FString HealthString = FString::Printf(TEXT("%.0f / %.0f"), CurrentHealth, MaxHealth);        //sets the text of the health
 		HealthText->SetText(FText::FromString(HealthString));
 	}
 

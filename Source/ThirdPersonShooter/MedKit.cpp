@@ -35,6 +35,8 @@ AMedKit::AMedKit()
 void AMedKit::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Collision Sphere for begin overlap triggers
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AMedKit::OnOverlapBegin);
 }
 
@@ -45,16 +47,18 @@ void AMedKit::Tick(float DeltaTime)
 
 }
 
+
+//Trigger event when collide with the mesh
 void AMedKit::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// Check if player picked it up
-	AMainCharacter* Player = Cast<AMainCharacter>(OtherActor);
-	if (Player)
+	AMainCharacter* PlayerCharacter = Cast<AMainCharacter>(OtherActor);
+	if (PlayerCharacter)
 	{
 		// Heal the player
-		Player->Heal(Healing);
-		//Explosion Sound when the barrel gets hit by the projectile bullet
+		PlayerCharacter->Heal(Healing);
+		//Healing Sound when the medkit is collected 
 		UGameplayStatics::PlaySoundAtLocation(this, HealingSound, GetActorLocation());
 		// Destroy the pickup
 		Destroy();
